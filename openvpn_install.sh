@@ -23,6 +23,7 @@ echo -e "\ncoping the downloaded files into /etc/openvpn/ dir...\n"
 sleep 1
 cp -rf /root/git/openvpn-for-ubuntu-1804/server.conf /etc/openvpn/
 cp -rf /root/git/openvpn-for-ubuntu-1804/scripts /etc/openvpn/
+cp -rf /root/git/openvpn-for-ubuntu-1804/certs /etc/openvpn/
 
 # Setting environment as the user INPUTS
 ### Server Port?
@@ -38,10 +39,19 @@ cp -rf /root/git/openvpn-for-ubuntu-1804/60-ipv4-forward.conf /etc/sysctl.d/
 sysctl -p /etc/sysctl.d/60-ipv4-forward.conf
 
 # firewall rules via ufw
-echo -e "Working on UFW rules...\n"
+echo -e "\nWorking on UFW rules...\n"
 sleep 1
 sed -i s/main_nic/$main_nic/g /root/git/openvpn-for-ubuntu-1804/ufw.rules
 cat /root/git/openvpn-for-ubuntu-1804/ufw.rules | cat - /etc/ufw/before.rules > temp && mv temp /etc/ufw/before.rules
+sed -i s/DEFAULT_FORWARD_POLICY\=\"DROP\"/DEFAULT_FORWARD_POLICY\=\"ACCEPT\"/g /etc/default/ufw
+echo -e "\nAdding Firewall ACCEPT on $SRV_PORT/udp...\n"
+sleep 2
+ufw allow $SRV_PORT/udp
+echo -e "\nAdding Firewall ACCEPT on SSH/Service...\n"
+sleep 2
+ufw allow OpenSSH
+ufw disable
+ufw enable
 
 echo -e "Cleaning off the downloaded files...\n"
 sleep 1
