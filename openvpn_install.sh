@@ -21,9 +21,6 @@ echo -e "\ncoping the downloaded files into /etc/openvpn/ dir...\n"
 cp -rf /root/git/openvpn-for-ubuntu-1804/server.conf /etc/openvpn/
 cp -rf /root/git/openvpn-for-ubuntu-1804/scripts /etc/openvpn/
 
-echo -e "Cleaning off the downloaded files...\n"
-rm -fr /root/git
-
 # Setting environment as the user INPUTS
 ### Server Port?
 echo -e "On which UDP Port that the OpenVPN-Server should run on?"
@@ -31,9 +28,15 @@ read -p 'UDP_PORT: press enter to have default[1194] => ' SRV_PORT
 sed -i s/port\ [0-9].*/port\ $SRV_PORT/g /etc/openvpn/server.conf
 
 # ipv4 routing
+echo -e "Working on IPV4 Routing...\n"
 cp -rf /root/git/openvpn-for-ubuntu-1804/40-ipv4-forward.conf /etc/sysctl.d/
 sysctl -p
 
 # firewall rules via ufw
+echo -e "Working on UFW rules...\n"
 sed -i s/main_nic/$main_nic/g /root/git/openvpn-for-ubuntu-1804/ufw.rules
 cat /root/git/openvpn-for-ubuntu-1804/ufw.rules | cat - /etc/ufw/before.rules > temp && mv temp /etc/ufw/before.rules
+
+echo -e "Cleaning off the downloaded files...\n"
+rm -fr /root/git
+
