@@ -29,7 +29,7 @@ sed -i s/port\ [0-9].*/port\ $SRV_PORT/g /etc/openvpn/server.conf
 
 # ipv4 routing
 echo -e "Working on IPV4 Routing...\n"
-cp -rf /root/git/openvpn-for-ubuntu-1804/40-ipv4-forward.conf /etc/sysctl.d/
+cp -rf /root/git/openvpn-for-ubuntu-1804/60-ipv4-forward.conf /etc/sysctl.d/
 sysctl -p
 
 # firewall rules via ufw
