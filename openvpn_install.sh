@@ -6,6 +6,7 @@ main_nic=`ip route | grep default | cut -d ' ' -f 5`
 if [ $ubuntu_ver == "18.04" ]
 then 
 	echo -e "\nDetected the ubuntu version as $ubuntu_ver\n"
+	sleep 1
 	echo -e "Adding \"ondrej/php repository\"\n"
 	add-apt-repository -y ppa:ondrej/php
 	echo -e  "\nInstalling openvpn & its dependancies...\n"
@@ -15,28 +16,34 @@ fi
 
 mkdir /root/git && cd /root/git/
 echo -e "\ncloning the git repo...\n"
+sleep 1
 git clone https://github.com/keshara/openvpn-for-ubuntu-1804.git
 
 echo -e "\ncoping the downloaded files into /etc/openvpn/ dir...\n"
+sleep 1
 cp -rf /root/git/openvpn-for-ubuntu-1804/server.conf /etc/openvpn/
 cp -rf /root/git/openvpn-for-ubuntu-1804/scripts /etc/openvpn/
 
 # Setting environment as the user INPUTS
 ### Server Port?
 echo -e "On which UDP Port that the OpenVPN-Server should run on?"
+sleep 1
 read -p 'UDP_PORT: press enter to have default[1194] => ' SRV_PORT
 sed -i s/port\ [0-9].*/port\ $SRV_PORT/g /etc/openvpn/server.conf
 
 # ipv4 routing
 echo -e "Working on IPV4 Routing...\n"
+sleep 1
 cp -rf /root/git/openvpn-for-ubuntu-1804/60-ipv4-forward.conf /etc/sysctl.d/
-sysctl -p
+sysctl -p /etc/sysctl.d/60-ipv4-forward.conf
 
 # firewall rules via ufw
 echo -e "Working on UFW rules...\n"
+sleep 1
 sed -i s/main_nic/$main_nic/g /root/git/openvpn-for-ubuntu-1804/ufw.rules
 cat /root/git/openvpn-for-ubuntu-1804/ufw.rules | cat - /etc/ufw/before.rules > temp && mv temp /etc/ufw/before.rules
 
 echo -e "Cleaning off the downloaded files...\n"
+sleep 1
 rm -fr /root/git
 
