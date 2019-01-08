@@ -43,7 +43,8 @@ echo -e "\nWorking on UFW rules...\n"
 sleep 1
 sed -i s/main_nic/$main_nic/g /root/git/openvpn-for-ubuntu-1804/ufw.rules
 
-if [ `grep -r OPENVPN /etc/ufw/before.rules` ]
+UFW_VALUE=`grep -r OPENVPN /etc/ufw/before.rules`
+if [ -z $UFW_VALUE ]
     then
 	cat /root/git/openvpn-for-ubuntu-1804/ufw.rules | cat - /etc/ufw/before.rules > temp && mv temp /etc/ufw/before.rules
     else
