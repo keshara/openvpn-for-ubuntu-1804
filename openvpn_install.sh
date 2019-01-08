@@ -29,7 +29,7 @@ cp -rf /root/git/openvpn-for-ubuntu-1804/certs /etc/openvpn/
 ### Server Port?
 echo -e "On which UDP Port that the OpenVPN-Server should run on?"
 sleep 1
-read -p 'UDP_PORT: press enter to have default[1194] => ' SRV_PORT
+read -e -p 'UDP_PORT: [default] => ' -i "1194" SRV_PORT
 sed -i s/port\ [0-9].*/port\ $SRV_PORT/g /etc/openvpn/server.conf
 
 # ipv4 routing
