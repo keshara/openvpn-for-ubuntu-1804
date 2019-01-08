@@ -9,7 +9,7 @@ This provides all the files and proceedure to setup Openvpn server on Ubuntu 18.
 ### Download the Script and set enough permision on it
 ```
 # cd /root && wget https://raw.githubusercontent.com/keshara/openvpn-for-ubuntu-1804/master/openvpn_install.sh
-# chood 777 openvpn_install.sh
+# chmod 777 openvpn_install.sh
 ```
 
 ### Installation
