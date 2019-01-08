@@ -1,5 +1,5 @@
 # OpenVPN Server for Ubuntu 1804
-Files scripts and configuration for Openvpn setup for ubuntu 18.04
+This provides all the files and proceedure to setup Openvpn server on Ubuntu 18.04. Installation and Setting up nessecery configuration is automated within the Script.
 
 ### Getting root privileges
 ```
@@ -18,4 +18,4 @@ Execute the downloaded script with "ROOT" privileges...
 # ./openvpn_install.sh
 ```
 
-Install procedue would ask the UDP port number for which the OpenVPN server should listen on. Make sure set it to the port that you prefer on...
+Install procedue would ask the UDP port number for which the OpenVPN server should listen on. Make sure to set it to the port that you prefer on...
