@@ -51,9 +51,13 @@ echo -e "\nAdding Firewall ACCEPT on SSH/Service...\n"
 sleep 2
 ufw allow OpenSSH
 ufw disable
-ufw enable
+echo "y" | sudo ufw enable
 
+# remove the download files
 echo -e "Cleaning off the downloaded files...\n"
 sleep 1
 rm -fr /root/git
 
+# starting up the service
+echo -e "Starting the OpenVPN service...\n"
+systemctl start openvpn@server.service
