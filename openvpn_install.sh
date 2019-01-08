@@ -42,7 +42,14 @@ sysctl -p /etc/sysctl.d/60-ipv4-forward.conf
 echo -e "\nWorking on UFW rules...\n"
 sleep 1
 sed -i s/main_nic/$main_nic/g /root/git/openvpn-for-ubuntu-1804/ufw.rules
-cat /root/git/openvpn-for-ubuntu-1804/ufw.rules | cat - /etc/ufw/before.rules > temp && mv temp /etc/ufw/before.rules
+
+if [ `grep -r OPENVPN /etc/ufw/before.rules` ]
+    then
+	cat /root/git/openvpn-for-ubuntu-1804/ufw.rules | cat - /etc/ufw/before.rules > temp && mv temp /etc/ufw/before.rules
+    else
+	echo "Corrent firewall rule already applied"
+fi
+
 sed -i s/DEFAULT_FORWARD_POLICY\=\"DROP\"/DEFAULT_FORWARD_POLICY\=\"ACCEPT\"/g /etc/default/ufw
 echo -e "\nAdding Firewall ACCEPT on $SRV_PORT/udp...\n"
 sleep 2
