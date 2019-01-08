@@ -10,7 +10,7 @@ then
 	echo -e "Adding \"ondrej/php repository\"\n"
 	add-apt-repository -y ppa:ondrej/php
 	echo -e  "\nInstalling openvpn & its dependancies...\n"
-	apt-get update && apt-get -y install openvpn git
+	apt-get update && apt-get -y install php7.2 php7.2-cli php7.2-gd php7.2-mysql php7.2-common php7.2-mbstring php7.2-bcmath php7.2-xml php7.2-fpm php7.2-curl php7.2-zip  curl mysql-client-core-5.7 mysql-common openvpn git
 else	echo "This script is not supported on your current ubuntu $ubuntu_ver version"
 fi
 
